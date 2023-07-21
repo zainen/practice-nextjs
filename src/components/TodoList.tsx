@@ -1,10 +1,11 @@
 'use server'
 
-import { TodoListProps } from "@/types";
 import { TodoItem } from "./TodoItem";
-import { toggleTodo } from "@/helperFunctions";
+import { getTodos, toggleTodo } from "@/helperFunctions";
+import { use } from "react";
 
-export const TodoList = ({todos}: TodoListProps) => {
+export const TodoList = () => {
+  const todos = use(getTodos());
   return <>
       <ul className="pl-4">
         {todos.map((todo) => (

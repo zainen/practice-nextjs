@@ -1,15 +1,20 @@
+'use server'
 import { TodoList } from "@/components/TodoList";
-import { prisma } from "@/db";
+import { getTodos } from "@/helperFunctions";
+import { TodoListProps } from "@/types";
+import { Suspense } from "react";
 
-const getTodos = () => {
-  return prisma.todo.findMany();
-};
+// export async function getServerSideProps() {
+//   const todos = await getTodos();
+//   return { props: { todos: todos}}
+// }
 
 const Home = async () => {
-  const todos = await getTodos();
   return (
     <>
-      <TodoList todos={todos}/>
+    <Suspense fallback={<div>Loading...</div>}>
+      <TodoList />
+    </Suspense>
     </>
   );
 };
