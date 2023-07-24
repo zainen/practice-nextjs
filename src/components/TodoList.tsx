@@ -1,14 +1,13 @@
 'use server'
 
 import { TodoItem } from "./TodoItem";
-import { getTodos, toggleTodo } from "@/helperFunctions";
-import { use } from "react";
+import { filterTodos, getTodos, toggleTodo } from "@/helperFunctions";
 
-export const TodoList = () => {
-  const todos = use(getTodos());
+export const TodoList = async ({filter}: {filter?: boolean}) => {
+  const todos = await getTodos();
   return <>
       <ul className="pl-4">
-        {todos.map((todo) => (
+        {(await filterTodos(todos, filter)).map((todo) => (
           <TodoItem key={todo.id} {...todo} toggleTodo={toggleTodo} />
         ))}
       </ul>

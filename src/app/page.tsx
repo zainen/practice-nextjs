@@ -11,11 +11,9 @@ import { Suspense } from "react";
 
 const Home = async () => {
   return (
-    <>
     <Suspense fallback={<div>Loading...</div>}>
       <TodoList />
     </Suspense>
-    </>
   );
 };
 

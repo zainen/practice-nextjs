@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "./db";
-import { TodoItemProps } from "./types";
+import { TodoListProps } from "./types";
 import { revalidatePath } from "next/cache";
 
 export const getTodos = async () => {
@@ -27,10 +27,14 @@ export const createTodo = async (data: FormData) => {
 
 export const toggleTodo = async (id: string, complete: boolean) => {
   "use server";
+  revalidatePath('/')
+  revalidatePath('/todo')
+  revalidatePath('/completed')
+
   await prisma.todo.update({ where: { id }, data: { complete } });
 };
 
-export const filterTodos = async (arr: Omit<TodoItemProps, 'toggleTodo'>[], status: boolean) => {
+export const filterTodos = async (arr: TodoListProps['todos'], status?: boolean) => {
   'use server'
-  return arr.filter(item => item.complete === status)
+  return arr.filter(item => item.complete !== status)
 }
